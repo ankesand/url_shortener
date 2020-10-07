@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<!-- Bootstrap CSS 
+	<link r	el="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+	-->
+    <title>{{ title }}</title>
+    <style>
+	
+	  .flex-container {
+	    display: flex;
+		flex-direction: column;
+	  }
+	  .flex-item {
+	    flex-grow: 1;
+	  }
+	  
+	  @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+	  
+    </style>
+    <!-- Custom styles for this template -->
+  </head>
+  
+  <body>
+  
+    <header>
+    </header>
+
+    <main>
+	<div style="text-align: center;">
+	<!--
+	<div style="width: 75%; justify-content: center; align-items: center; align-content: center; text-align: center;">
+	-->
+	  <div class="flex-container">
+        <h1>URL Shortener</h1>
+        <p>Add / delete 'tiny-like' URLs</p>
+      </div>
+
+      <div class="flex-container" style="flex: 1; width: 75%; background-color: red; border: 1px solid black;">
+        <table style="width: auto; height: 100%;">
+          <tbody>
+            <tr>
+              <td>
+                <table style="width: auto; margin: 0; padding: 0;">
+                  <thead>
+                    <tr>
+                      <th align="center" style="background-color: #dfdfdf; border-bottom: 1px solid purple;">Short</th>
+                      <th align="center" style="background-color: #dfdfdf; border-bottom: 1px solid purple;">Long</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for url in urls %}
+                    <tr>
+                     <td align="center" style="border-bottom: 1px solid purple;"><a href="{{ url_for('url_redirect', url_short=url.url_short) }}">{{ url.url_short }}</a></td>
+                      <td align="left" style="border-bottom: 1px solid purple;"><a href="{{ url.url_long }}">{{ url.url_long }}</a></td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                      <td>&nbsp;</td>
+                      <td>&nbsp;</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </td>
+              <td>
+                <table style="width: auto; margin: 0; padding: 0;">
+                  <thead>
+                    <tr>
+                      <th style="background-color: #dfdfdf; border-bottom: 1px solid purple;">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <form method="POST" action="{{ url_for('url_shortener') }}">
+                      {{ url_delete.csrf_token }}
+                      {% for url_short in url_delete.url_short %}
+                      <tr>
+                        <td align="center" style="border-bottom: 1px solid purple;">{{ url_short }}</td>
+                      </tr>
+                      {% endfor %}
+                      <tr>
+                        <td align="center">{{ url_delete.delete }}</td>
+                      </tr>
+                    </form>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+
+        <form method="POST" action="{{ url_for('url_shortener') }}">
+        {{ url_add.csrf_token }}
+        {{ url_add.url_long }}
+        <br>
+        {{ url_add.add }}
+        </form>
+      </div>
+	
+	</div>
+	</main>
+	
+	<footer>
+      <div class="flex-container">
+        <h3>ankesand.com</a></h3>
+      </div>
+    </footer>
+	
+</html>
